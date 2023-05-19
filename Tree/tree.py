@@ -1,39 +1,51 @@
-tree = ["A", "B", "C", "D", "E", "F", None, "G"]
+# tree = [5,2,6,1,4]
+# 이진 트리 구현
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
 
-# 자식 노드 찿기
-i = 0
-n = len(tree)
-while i < n:
-    if tree[i]:
-        print(f"parent: {tree[i]}", end=", ")
-        left = 2 * i + 1
-        right = left + 1
-        if left < n and tree[left] is not None:
-            print(f"left: {tree[left]}", end=", ")
-        if right < n and tree[right] is not None:
-            print(f"right: {tree[right]}", end=", ")
-        print()
-    i += 1
+class BinaryTree:
+    def __init__(self, data):
+        self.root = Node(data)
+        self.count = 1
 
-# parent: A, left: B, right: C, 
-# parent: B, left: D, right: E,
-# parent: C, left: F,
-# parent: D, left: G,
-# parent: E,
-# parent: F,
-# parent: G,
+    def __len__(self):
+        return self.count
+    
+    def insert(self, data):
+        newNode = Node(data)
+        currentNode = self.root
 
-# 부모 노드 찾기
-# n = len(tree)
-# i = n-1
-# while i > 0:
-#     if tree[i]:
-#         print(f"parent of {tree[i]} => {tree[(i-1)//2]}")
-#     i -= 1
+        while currentNode:
+            if data == currentNode.data:
+                return
+            elif data < currentNode.data:
+                if not currentNode.left:
+                    currentNode.left = newNode
+                    self.count += 1
+                    return
+                else:
+                    currentNode = currentNode.left
+            elif data > currentNode.data:
+                if not currentNode.right:
+                    currentNode.right = newNode
+                    self.count += 1
+                    return
+                else:
+                    currentNode = currentNode.right
 
-# parent of G => D
-# parent of F => C
-# parent of E => B
-# parent of D => B
-# parent of C => A
-# parent of B => A
+    # 구현하고싶은것
+    # 전위순회, 중위순회, 후회순회
+    # 노드 깊이
+    # 노드 삭제
+    # 노드 존재 여부
+
+t = BinaryTree(5)
+t.insert(2)
+t.insert(6)
+t.insert(1)
+t.insert(4)
+
+print(t.root.left.left.data)
